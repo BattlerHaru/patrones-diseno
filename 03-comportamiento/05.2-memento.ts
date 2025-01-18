@@ -17,13 +17,13 @@ import { COLORS } from '../helpers/colors.ts';
 class DrawingMemento {
   private shapes: string[];
 
-  constructor(shapes: string[]) {
+  constructor( shapes: string[] ) {
     // Guardamos una copia de las figuras para evitar mutaciones
-    this.shapes = [...shapes];
+    this.shapes = [ ...shapes ];
   }
 
   getShapes(): string[] {
-    return [...this.shapes];
+    return [ ...this.shapes ];
   }
 }
 
@@ -32,26 +32,25 @@ class DrawingBoard {
   private shapes: string[] = [];
 
   // Agregar una figura a la pizarra
-  addShape(shape: string): void {
-    this.shapes.push(shape);
-    console.log(`Figura agregada: ${shape}`);
+  addShape( shape: string ): void {
+    this.shapes.push( shape );
+    console.log( `Figura agregada: ${ shape }` );
   }
 
   // Mostrar el estado actual de la pizarra
   showBoard(): void {
-    console.log('Pizarra actual:', this.shapes.join(', ') || 'Vacía');
+    console.log( 'Pizarra actual:', this.shapes.join( ', ' ) || 'Vacía' );
   }
 
   // Crear un Memento del estado actual de la pizarra
   save(): DrawingMemento {
-    // TODO: Implementar el método save para guardar el estado actual
-    throw new Error('Method not implemented.');
+    return new DrawingMemento( this.shapes );
   }
 
   // Restaurar el estado de la pizarra desde un Memento
-  restore(memento: DrawingMemento): void {
+  restore( memento: DrawingMemento ): void {
     this.shapes = memento.getShapes();
-    console.log('%c\nEstado de la pizarra restaurado.', COLORS.blue);
+    console.log( '%c\nEstado de la pizarra restaurado.', COLORS.blue );
   }
 }
 
@@ -60,15 +59,13 @@ class History {
   private mementos: DrawingMemento[] = [];
 
   // Guardar un Memento
-  // TODO: Implementar push para guardar en la historia
-  push(memento: DrawingMemento): void {
-    throw new Error('Method not implemented.');
+  push( memento: DrawingMemento ): void {
+    this.mementos.push( memento );
   }
 
   // Recuperar el último Memento
-  // TODO: Implementar pop para recuperar el último memento
   pop(): DrawingMemento | undefined {
-    throw new Error('Method not implemented.');
+    return this.mementos.pop();
   }
 }
 
@@ -79,22 +76,25 @@ function main(): void {
   const history = new History();
 
   // El usuario agrega figuras y guarda el estado en cada paso
-  drawingBoard.addShape('Círculo');
-  history.push(drawingBoard.save());
+  drawingBoard.addShape( 'Círculo' );
+  history.push( drawingBoard.save() );
 
-  drawingBoard.addShape('Cuadrado');
-  history.push(drawingBoard.save());
+  drawingBoard.addShape( 'Cuadrado' );
+  history.push( drawingBoard.save() );
 
-  drawingBoard.addShape('Triángulo');
+  drawingBoard.addShape( 'Triángulo' );
   drawingBoard.showBoard(); // Mostrar estado actual de la pizarra
 
   // Deshacer el último cambio
-  drawingBoard.restore(history.pop()!);
+  drawingBoard.restore( history.pop()! );
   drawingBoard.showBoard(); // Mostrar estado después de deshacer
 
   // Deshacer otro cambio
-  drawingBoard.restore(history.pop()!);
+  drawingBoard.restore( history.pop()! );
   drawingBoard.showBoard(); // Mostrar estado después de deshacer nuevamente
+
+  // drawingBoard.restore( history.pop()! );
+  // drawingBoard.showBoard(); // Mostrar estado después de deshacer nuevamente
 }
 
 main();
