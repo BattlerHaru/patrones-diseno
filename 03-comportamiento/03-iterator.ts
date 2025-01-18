@@ -11,7 +11,7 @@
 
 interface Iterator<T> {
     next(): T | null;
-    hasNext(): Boolean;
+    hasNext(): boolean;
     current(): T | null;
 }
 
@@ -63,7 +63,7 @@ class PokemonIterator implements Iterator<Pokemon> {
         return null;
     }
 
-    hasNext(): Boolean {
+    hasNext(): boolean {
         return this.position < this.collection.getLength();
     }
 
