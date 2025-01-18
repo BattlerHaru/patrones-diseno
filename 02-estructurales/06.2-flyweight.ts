@@ -15,7 +15,7 @@ class BulletType {
   private damage: number;
   private color: string;
 
-  constructor(name: string, damage: number, color: string) {
+  constructor( name: string, damage: number, color: string ) {
     this.name = name;
     this.damage = damage;
     this.color = color;
@@ -38,7 +38,8 @@ class BulletType {
 class BulletTypeFactory {
   private bulletTypes: Record<string, BulletType> = {};
 
-  getBulletType(name: string, damage: number, color: string): BulletType {
+  getBulletType( name: string, damage: number, color: string ): BulletType {
+    // TODO: COLOR ROJO CADA QUE SE CREE UNA NUEVA INSTANCIA
     // TODO: Implementar un método para obtener un tipo de bala
     // Si no existe el tipo de bala, crearlo y guardarlo en la lista de tipos de bala
     // Si existe el tipo de bala, devolverlo
@@ -46,7 +47,7 @@ class BulletTypeFactory {
     // TODO: El key, debería de ser un identificador único para cada tipo de bala
     // name-damage-color
 
-    throw new Error('Method not implemented.');
+    throw new Error( 'Method not implemented.' );
   }
 }
 
@@ -57,7 +58,7 @@ class Bullet {
   private direction: number;
   private bulletType: BulletType;
 
-  constructor(x: number, y: number, direction: number, bulletType: BulletType) {
+  constructor( x: number, y: number, direction: number, bulletType: BulletType ) {
     this.x = x;
     this.y = y;
     this.direction = direction;
@@ -66,14 +67,14 @@ class Bullet {
 
   display(): void {
     const text = `
-      Bala del tipo: %c"${this.bulletType.getName()}" 
-      %cCoords: (${this.x}, ${this.y})
-      Dirección ${this.direction}
-      Daño: ${this.bulletType.getDamage()} 
-      Color: ${this.bulletType.getColor()}
+      Bala del tipo: %c"${ this.bulletType.getName() }" 
+      %cCoords: (${ this.x }, ${ this.y })
+      Dirección ${ this.direction }
+      Daño: ${ this.bulletType.getDamage() } 
+      Color: ${ this.bulletType.getColor() }
     `;
 
-    console.log(text, COLORS.green, COLORS.white);
+    console.log( text, COLORS.green, COLORS.white );
   }
 }
 
@@ -83,7 +84,7 @@ class ShootingSystem {
   private bullets: Bullet[] = [];
   private factory: BulletTypeFactory;
 
-  constructor(factory: BulletTypeFactory) {
+  constructor( factory: BulletTypeFactory ) {
     this.factory = factory;
   }
 
@@ -95,9 +96,9 @@ class ShootingSystem {
     damage: number,
     color: string
   ): void {
-    const bulletType = this.factory.getBulletType(type, damage, color);
-    const bullet = new Bullet(x, y, direction, bulletType);
-    this.bullets.push(bullet);
+    const bulletType = this.factory.getBulletType( type, damage, color );
+    const bullet = new Bullet( x, y, direction, bulletType );
+    this.bullets.push( bullet );
     bullet.display();
   }
 
@@ -110,17 +111,17 @@ class ShootingSystem {
 
 function main() {
   const factory = new BulletTypeFactory();
-  const shootingSystem = new ShootingSystem(factory);
+  const shootingSystem = new ShootingSystem( factory );
 
   // Disparar varias balas de diferentes tipos
-  shootingSystem.shoot(10, 20, 0, 'Pistola', 10, 'Gris');
-  shootingSystem.shoot(15, 25, 90, 'Escopeta', 20, 'Rojo');
-  shootingSystem.shoot(20, 30, 180, 'Rifle', 15, 'Verde');
-  shootingSystem.shoot(10, 20, 45, 'Pistola', 10, 'Gris');
-  shootingSystem.shoot(25, 35, 270, 'Escopeta', 20, 'Rojo');
+  shootingSystem.shoot( 10, 20, 0, 'Pistola', 10, 'Gris' );
+  shootingSystem.shoot( 15, 25, 90, 'Escopeta', 20, 'Rojo' );
+  shootingSystem.shoot( 20, 30, 180, 'Rifle', 15, 'Verde' );
+  shootingSystem.shoot( 10, 20, 45, 'Pistola', 10, 'Gris' );
+  shootingSystem.shoot( 25, 35, 270, 'Escopeta', 20, 'Rojo' );
 
   console.log(
-    `Total de balas disparadas: %c${shootingSystem.getBulletCount()}\n`,
+    `Total de balas disparadas: %c${ shootingSystem.getBulletCount() }\n`,
     COLORS.yellow
   );
 }
