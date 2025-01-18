@@ -40,9 +40,6 @@ class ControlTower {
     this.airplanes.push( airplane );
   }
 
-  // Enviar un mensaje de un avión a todos los demás
-  //TODO: Implementar el método sendMessage
-  // sendMessage(sender: Airplane, message: string): void
   sendMessage( sender: Airplane, message: string ): void {
     const userToSend = this.airplanes.filter( airplane => airplane !== sender );
 
