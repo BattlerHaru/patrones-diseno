@@ -27,8 +27,8 @@ class TextEditor {
   private history: string[] = [];
 
   // Agregar texto al editor
-  type(text: string): void {
-    this.history.push(this.text); // Guardar estado antes de cambiarlo
+  type( text: string ): void {
+    this.history.push( this.text ); // Guardar estado antes de cambiarlo
     this.text += text;
   }
 
@@ -36,27 +36,27 @@ class TextEditor {
   copy(): void {
     this.clipboard = this.text;
     console.log(
-      `Texto copiado al portapapeles: \n%c"${this.clipboard}"`,
+      `Texto copiado al portapapeles: \n%c"${ this.clipboard }"`,
       COLORS.blue
     );
   }
 
   // Pegar el texto del portapapeles
   paste(): void {
-    this.history.push(this.text); // Guardar estado antes de pegar
+    this.history.push( this.text ); // Guardar estado antes de pegar
     this.text += this.clipboard;
-    console.log(`Texto después de pegar: \n%c"${this.text}"`, COLORS.blue);
+    console.log( `Texto después de pegar: \n%c"${ this.text }"`, COLORS.blue );
   }
 
   // Deshacer la última acción
   undo(): void {
-    if (this.history.length > 0) {
+    if ( this.history.length > 0 ) {
       this.text = this.history.pop()!;
-      console.log(`Texto después de deshacer: \n%c"${this.text}"`, COLORS.blue);
+      console.log( `Texto después de deshacer: \n%c"${ this.text }"`, COLORS.blue );
       return;
     }
 
-    console.log('No hay nada para deshacer.');
+    console.log( 'No hay nada para deshacer.' );
   }
 
   // Mostrar el texto actual
@@ -68,20 +68,35 @@ class TextEditor {
 // 3. Clases de Comandos Concretos
 class CopyCommand implements Command {
   private editor: TextEditor;
+  constructor( editor: TextEditor ) {
+    this.editor = editor;
+  }
 
-  // TODO: Inyectar el editor en el constructor y el método execute con la acción respectiva
+  execute(): void {
+    this.editor.copy();
+  }
 }
 
 class PasteCommand implements Command {
   private editor: TextEditor;
+  constructor( editor: TextEditor ) {
+    this.editor = editor;
+  }
 
-  // TODO: Inyectar el editor en el constructor y el método execute con la acción respectiva
+  execute(): void {
+    this.editor.paste();
+  }
 }
 
 class UndoCommand implements Command {
   private editor: TextEditor;
+  constructor( editor: TextEditor ) {
+    this.editor = editor;
+  }
 
-  // TODO: Inyectar el editor en el constructor y el método execute con la acción respectiva
+  execute(): void {
+    this.editor.undo();
+  }
 }
 
 // 4. Clase Cliente - Toolbar
@@ -89,15 +104,16 @@ class UndoCommand implements Command {
 class Toolbar {
   private commands: Record<string, Command> = {};
 
-  setCommand(button: string, command: Command): void {
-    // TODO: Asignar el comando al botón correspondiente
+  setCommand( button: string, command: Command ): void {
+    this.commands[ button ] = command;
   }
 
-  clickButton(button: string): void {
-    //TODO: Ejecutar el comando correspondiente al botón
-
-    // TODO: Manejar el caso en que no haya un comando asignado al botón
-    console.error(`No hay un comando asignado al botón "${button}"`);
+  clickButton( button: string ): void {
+    if ( this.commands[ button ] ) {
+      this.commands[ button ].execute();
+      return;
+    }
+    console.error( `No hay un comando asignado al botón "${ button }"` );
   }
 }
 
@@ -108,43 +124,43 @@ function main() {
   const toolbar = new Toolbar();
 
   // Crear comandos para el editor
-  const copyCommand = new CopyCommand(editor);
-  const pasteCommand = new PasteCommand(editor);
-  const undoCommand = new UndoCommand(editor);
+  const copyCommand = new CopyCommand( editor );
+  const pasteCommand = new PasteCommand( editor );
+  const undoCommand = new UndoCommand( editor );
 
   // Asignar comandos a los botones de la barra de herramientas
-  toolbar.setCommand('copy', copyCommand);
-  toolbar.setCommand('paste', pasteCommand);
-  toolbar.setCommand('undo', undoCommand);
+  toolbar.setCommand( 'copy', copyCommand );
+  toolbar.setCommand( 'paste', pasteCommand );
+  toolbar.setCommand( 'undo', undoCommand );
 
   // Simulación de edición de texto
-  editor.type('H');
-  editor.type('o');
-  editor.type('l');
-  editor.type('a');
-  editor.type(' ');
-  editor.type('M');
-  editor.type('u');
-  editor.type('n');
-  editor.type('d');
-  editor.type('o');
-  editor.type('!');
-  console.log(`Texto actual: %c"${editor.getText()}"`, COLORS.green);
+  editor.type( 'H' );
+  editor.type( 'o' );
+  editor.type( 'l' );
+  editor.type( 'a' );
+  editor.type( ' ' );
+  editor.type( 'M' );
+  editor.type( 'u' );
+  editor.type( 'n' );
+  editor.type( 'd' );
+  editor.type( 'o' );
+  editor.type( '!' );
+  console.log( `Texto actual: %c"${ editor.getText() }"`, COLORS.green );
 
   // Usar la barra de herramientas
-  console.log('\nCopiando texto:');
-  toolbar.clickButton('copy');
+  console.log( '\nCopiando texto:' );
+  toolbar.clickButton( 'copy' );
 
-  console.log('\nPegando texto:');
-  toolbar.clickButton('paste');
+  console.log( '\nPegando texto:' );
+  toolbar.clickButton( 'paste' );
 
-  console.log('\nDeshaciendo la última acción:');
-  toolbar.clickButton('undo');
+  console.log( '\nDeshaciendo la última acción:' );
+  toolbar.clickButton( 'undo' );
 
-  console.log('\nDeshaciendo de nuevo:');
-  toolbar.clickButton('undo');
+  console.log( '\nDeshaciendo de nuevo:' );
+  toolbar.clickButton( 'undo' );
 
-  console.log(`\nTexto final: "${editor.getText()}"`);
+  console.log( `\nTexto final: "${ editor.getText() }"` );
 }
 
 main();
