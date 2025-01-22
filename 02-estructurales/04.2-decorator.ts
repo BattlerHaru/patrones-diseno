@@ -2,7 +2,7 @@
  * ! Patrón decorador
  * Es un patrón de diseño estructural que permite añadir
  * funcionalidades a objetos, colocando estos objetos dentro de
- * objetos encapsuladores especiales que contienen estas funcionalidades.
+ * objetos encapsulados especiales que contienen estas funcionalidades.
  *
  * No confundirlo con los decoradores de TypeScript que son anotaciones.
  *
@@ -15,18 +15,18 @@
 // 1. Interfaz Character
 interface Character {
   getDescription(): string;
-  getStats(): { attack: number; defense: number };
+  getStats(): { attack: number; defense: number; };
 }
 
 // 2. Clase BasicCharacter
 // Representa un personaje básico sin accesorios
-// TODO: Implementar la interfaz Character
 class BasicCharacter implements Character {
+
   getDescription(): string {
-    return 'Personaje básico';
+    return 'Personaje Básico';
   }
 
-  getStats(): { attack: number; defense: number } {
+  getStats(): { attack: number; defense: number; } {
     return { attack: 10, defense: 10 };
   }
 }
@@ -34,9 +34,10 @@ class BasicCharacter implements Character {
 // 3. Clase Decoradora CharacterDecorator
 // Actúa como base para los decoradores específicos
 abstract class CharacterDecorator implements Character {
+
   protected character: Character;
 
-  constructor(character: Character) {
+  constructor( character: Character ) {
     this.character = character;
   }
 
@@ -44,7 +45,7 @@ abstract class CharacterDecorator implements Character {
     return this.character.getDescription();
   }
 
-  getStats(): { attack: number; defense: number } {
+  getStats(): { attack: number; defense: number; } {
     return this.character.getStats();
   }
 }
@@ -56,7 +57,7 @@ class HelmetDecorator extends CharacterDecorator {
     return this.character.getDescription() + '\n * con Casco';
   }
 
-  override getStats(): { attack: number; defense: number } {
+  override getStats(): { attack: number; defense: number; } {
     const stats = this.character.getStats();
     return { attack: stats.attack, defense: stats.defense + 5 };
   }
@@ -69,7 +70,7 @@ class ShieldDecorator extends CharacterDecorator {
     return this.character.getDescription() + '\n * con Escudo';
   }
 
-  override getStats(): { attack: number; defense: number } {
+  override getStats(): { attack: number; defense: number; } {
     const stats = this.character.getStats();
     return { attack: stats.attack, defense: stats.defense + 10 };
   }
@@ -82,20 +83,31 @@ class SwordDecorator extends CharacterDecorator {
     return this.character.getDescription() + '\n * con Espada';
   }
 
-  override getStats(): { attack: number; defense: number } {
+  override getStats(): { attack: number; defense: number; } {
     const stats = this.character.getStats();
     return { attack: stats.attack + 7, defense: stats.defense };
   }
 }
 
-// TODO: Crear un nuevo decorador que añada un anillo que aumenta el ataque en +3
+class RingDecorator extends CharacterDecorator {
+  override getDescription(): string {
+    return this.character.getDescription() + '\n * con Anillo';
+  }
+
+  override getStats(): { attack: number; defense: number; } {
+    const stats = this.character.getStats();
+    return { attack: stats.attack + 3, defense: stats.defense };
+  }
+}
+
+
 // class RingDecorator ...
 class RingDecorator extends CharacterDecorator {
   override getDescription(): string {
     return this.character.getDescription() + '\n * con Anillo';
   }
 
-  override getStats(): { attack: number; defense: number } {
+  override getStats(): { attack: number; defense: number; } {
     const stats = this.character.getStats();
     return { attack: stats.attack + 3, defense: stats.defense };
   }
@@ -106,29 +118,29 @@ class RingDecorator extends CharacterDecorator {
 function main() {
   // Crear un personaje básico
   let character: Character = new BasicCharacter();
-  console.log('\nPersonaje inicial:', character.getDescription());
-  console.log('Estadísticas:', character.getStats());
+  console.log( '\nPersonaje inicial:', character.getDescription() );
+  console.log( 'Estadísticas:', character.getStats() );
 
   // Añadir un casco al personaje
-  character = new HelmetDecorator(character);
-  console.log('\nCon Casco:', character.getDescription());
-  console.log('Estadísticas:', character.getStats());
+  character = new HelmetDecorator( character );
+  console.log( '\nCon Casco:', character.getDescription() );
+  console.log( 'Estadísticas:', character.getStats() );
 
   // Añadir un escudo al personaje
-  character = new ShieldDecorator(character);
-  console.log('\nCon Escudo:', character.getDescription());
-  console.log('Estadísticas:', character.getStats());
+  character = new ShieldDecorator( character );
+  console.log( '\nCon Escudo:', character.getDescription() );
+  console.log( 'Estadísticas:', character.getStats() );
 
   // Añadir una espada al personaje
-  character = new SwordDecorator(character);
-  console.log('\nCon Espada:', character.getDescription());
-  console.log('Estadísticas:', character.getStats());
+  character = new SwordDecorator( character );
+  console.log( '\nCon Espada:', character.getDescription() );
+  console.log( 'Estadísticas:', character.getStats() );
 
-  character = new RingDecorator(character);
-  console.log('\nCon Anillo:', character.getDescription());
-  console.log('Estadísticas:', character.getStats());
+  character = new RingDecorator( character );
+  console.log( '\nCon Anillo:', character.getDescription() );
+  console.log( 'Estadísticas:', character.getStats() );
 
-  console.log('\n\n');
+  console.log( '\n\n' );
 }
 
 main();

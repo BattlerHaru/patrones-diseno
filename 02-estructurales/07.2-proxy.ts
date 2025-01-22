@@ -15,49 +15,39 @@ import { COLORS } from '../helpers/colors.ts';
 
 // 1. Interfaz Document
 interface Document {
-  displayContent(user: User): void;
+  displayContent( user: User ): void;
 }
 
 // 2. Clase que representa el Documento Confidencial - ConfidentialDocument
 class ConfidentialDocument implements Document {
   private content: string;
 
-  constructor(content: string) {
+  constructor( content: string ) {
     this.content = content;
   }
 
   displayContent(): void {
-    console.log(`Contenido del documento: \n%c${this.content}\n`, COLORS.blue);
+    console.log( `Contenido del documento: \n%c${ this.content }\n`, COLORS.blue );
   }
 }
 
 // 3. Clase Proxy - DocumentProxy
 class DocumentProxy implements Document {
   private document: Document;
-  private mustHaveRoles: string[];
+  private mustHaveRoles: string[] = [];
 
-  // TODO: private mustHaveRoles: string[]; //
-
-  constructor(document: Document, mustHaveRoles: string[] = []) {
+  constructor( document: Document, roles: string[] ) {
     this.document = document;
-    this.mustHaveRoles = mustHaveRoles;
+    this.mustHaveRoles = roles;
   }
 
-  displayContent(user: User): void {
-    if (this.mustHaveRoles.includes(user.getRole())) {
-      this.document.displayContent(user);
+  displayContent( user: User ): void {
+
+    if ( this.mustHaveRoles.includes( user.getRole() ) ) {
+      this.document.displayContent( user );
       return;
     }
-
-    // if (user.getRole() === 'admin') {
-    //   this.document.displayContent(user);
-    //   return;
-    // }
-
-    console.log(
-      `%cAcceso denegado. ${user.getName()}, no tienes permisos suficientes para ver este documento.`,
-      COLORS.red
-    );
+    console.log( `%cAcceso denegado. ${ user.getName() }, no tienes permisos suficientes para ver este documento.`, COLORS.red );
   }
 }
 
@@ -66,7 +56,7 @@ class User {
   private name: string;
   private role: 'admin' | 'user';
 
-  constructor(name: string, role: 'admin' | 'user') {
+  constructor( name: string, role: 'admin' | 'user' ) {
     this.name = name;
     this.role = role;
   }
@@ -86,16 +76,16 @@ function main() {
   const confidentialDoc = new ConfidentialDocument(
     'Este es el contenido confidencial del documento.'
   );
-  const proxy = new DocumentProxy(confidentialDoc, ['admin']);
+  const proxy = new DocumentProxy( confidentialDoc, [ "admin" ] );
 
-  const user1 = new User('Juan', 'user');
-  const user2 = new User('Ana', 'admin');
+  const user1 = new User( 'Juan', 'user' );
+  const user2 = new User( 'Ana', 'admin' );
 
-  console.log('Intento de acceso del usuario 1:');
-  proxy.displayContent(user1); // Debería denegar el acceso
+  console.log( 'Intento de acceso del usuario 1:' );
+  proxy.displayContent( user1 ); // Debería denegar el acceso
 
-  console.log('\nIntento de acceso del usuario 2:');
-  proxy.displayContent(user2); // Debería permitir el acceso
+  console.log( '\nIntento de acceso del usuario 2:' );
+  proxy.displayContent( user2 ); // Debería permitir el acceso
 }
 
 main();

@@ -10,7 +10,7 @@
  * https://refactoring.guru/es/design-patterns/bridge
  */
 
-import { COLORS } from '../helpers/colors.ts';
+import { COLORS } from "../helpers/colors.ts";
 
 interface Ability {
   use(): void;
@@ -18,36 +18,37 @@ interface Ability {
 
 class SwordAttack implements Ability {
   use(): void {
-    console.log('Ataca con una %cespada ferozmente', COLORS.blue);
+    console.log( "Ataca con una %cEspada ferozmente", COLORS.blue );
   }
 }
 
 class AxeAttack implements Ability {
   use(): void {
-    console.log('Ataca con una %chacha brutalmente', COLORS.blue);
+    console.log( "Ataca con una %cHacha brutalmente", COLORS.orange );
   }
 }
 
 class MagicSpell implements Ability {
   use(): void {
-    console.log('Lanza un hechizo %cmágico poderoso', COLORS.green);
+    console.log( "Lanza un %cHechizo poderoso", COLORS.pink );
   }
 }
 
 class FireballSpell implements Ability {
   use(): void {
-    console.log('Lanza una %cbola de fuego', COLORS.green);
+    console.log( "Lanza una %cBola de fuego", COLORS.red );
   }
 }
 
+
+
 abstract class Character {
   protected ability: Ability;
-
-  constructor(ability: Ability) {
+  constructor( ability: Ability ) {
     this.ability = ability;
   }
 
-  setAbility(ability: Ability): void {
+  setAbility( ability: Ability ) {
     this.ability = ability;
   }
 
@@ -56,27 +57,28 @@ abstract class Character {
 
 class Warrior extends Character {
   override performAbility(): void {
-    console.log('\nEl guerrero está listo para luchar');
+    console.log( "El Guerrero está listo para luchar" );
     this.ability.use();
   }
 }
 
 class Mage extends Character {
   override performAbility(): void {
-    console.log('\nEl mago prepara su magia');
+    console.log( "El Mago prepara su magia" );
     this.ability.use();
   }
 }
 
 function main() {
-  const warrior = new Warrior(new SwordAttack());
+  const warrior = new Warrior( new SwordAttack() );
   warrior.performAbility();
 
-  warrior.setAbility(new AxeAttack());
+  warrior.setAbility( new AxeAttack() );
   warrior.performAbility();
 
-  const mage = new Mage(new FireballSpell());
+  const mage = new Mage( new FireballSpell() );
   mage.performAbility();
+
 }
 
 main();

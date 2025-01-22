@@ -1,6 +1,7 @@
 import { COLORS } from '../../helpers/colors.ts';
 
 export class LocalLogger {
+<<<<<<< HEAD
   constructor(private file: string) {}
 
   writeLog(msg: string): void {
@@ -15,3 +16,19 @@ export class LocalLogger {
     console.log(`[${this.file} warning] %c${msg}`, COLORS.yellow);
   }
 }
+=======
+    constructor( private file: string ) { }
+
+    writeLog( msg: string ): void {
+        console.log( `[${ this.file } log] ${ msg }` );
+    }
+
+    writeError( msg: string ): void {
+        console.log( `[${ this.file } error] %c${ msg }`, COLORS.red );
+    }
+
+    writeWarning( msg: string ): void {
+        console.log( `[${ this.file } warning] %c${ msg }`, COLORS.orange );
+    }
+}
+>>>>>>> 02-estructurales-soluciones
