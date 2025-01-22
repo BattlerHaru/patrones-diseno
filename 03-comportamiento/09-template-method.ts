@@ -14,7 +14,7 @@
  * https://refactoring.guru/es/design-patterns/template-method
  */
 
-import { COLORS } from '../helpers/colors.ts';
+import { COLORS } from "../helpers/colors.ts";
 
 /**
  * Contexto: Vamos a implementar un sistema que permite preparar
@@ -38,11 +38,10 @@ abstract class HotBeverage {
   }
 
   private boilWater() {
-    console.log('Hirviendo agua...');
+    console.log( `Hirviendo agua...` );
   }
-
   private pourInCup() {
-    console.log('Sirviendo en la taza...');
+    console.log( `Sirviendo en la taza...` );
   }
 
   protected abstract addMainIngredient(): void;
@@ -51,32 +50,29 @@ abstract class HotBeverage {
 
 class Tea extends HotBeverage {
   protected override addMainIngredient(): void {
-    console.log('Añadiendo una bolsa de té');
+    console.log( `Añadiendo una bolsa de té` );
   }
-
   protected override addCondiments(): void {
-    console.log('Añadiendo miel y limón');
+    console.log( `Añadiendo miel y limón` );
   }
 }
 
 class Coffee extends HotBeverage {
   protected override addMainIngredient(): void {
-    console.log('Añadiendo café molido');
+    console.log( `Añadiendo café molido` );
   }
-
   protected override addCondiments(): void {
-    console.log('Añadiendo azúcar y leche');
+    console.log( `Añadiendo azúcar y leche` );
   }
 }
 
 function main() {
-  console.log('%cPreparando el té', COLORS.green);
+  console.log( `%cPreparando el té`, COLORS.green );
   const tea = new Tea();
   tea.prepare();
 
-  console.log('\n%cPreparando café', COLORS.brown);
+  console.log( `\n%cPreparando el café`, COLORS.brown );
   const coffee = new Coffee();
   coffee.prepare();
 }
-
 main();

@@ -19,7 +19,7 @@ class Pokemon {
   public name: string;
   public type: string;
 
-  constructor(name: string, type: string) {
+  constructor( name: string, type: string ) {
     this.name = name;
     this.type = type;
   }
@@ -28,15 +28,14 @@ class Pokemon {
 class PokemonCollection {
   private pokemons: Pokemon[] = [];
 
-  addPokemon(pokemon: Pokemon) {
-    this.pokemons.push(pokemon);
+  addPokemon( pokemon: Pokemon ) {
+    this.pokemons.push( pokemon );
   }
 
-  getPokemonAt(index: number): Pokemon | null {
-    if (index >= 0 && index < this.pokemons.length) {
-      return this.pokemons[index];
+  getPokemonAt( index: number ): Pokemon | null {
+    if ( index >= 0 && index < this.pokemons.length ) {
+      return this.pokemons[ index ];
     }
-
     return null;
   }
 
@@ -45,7 +44,7 @@ class PokemonCollection {
   }
 
   createIterator(): PokemonIterator {
-    return new PokemonIterator(this);
+    return new PokemonIterator( this );
   }
 }
 
@@ -53,15 +52,14 @@ class PokemonIterator implements Iterator<Pokemon> {
   private collection: PokemonCollection;
   private position: number = 0;
 
-  constructor(collection: PokemonCollection) {
+  constructor( collection: PokemonCollection ) {
     this.collection = collection;
   }
 
   next(): Pokemon | null {
-    if (this.hasNext()) {
-      return this.collection.getPokemonAt(this.position++);
+    if ( this.hasNext() ) {
+      return this.collection.getPokemonAt( this.position++ );
     }
-
     return null;
   }
 
@@ -70,28 +68,29 @@ class PokemonIterator implements Iterator<Pokemon> {
   }
 
   current(): Pokemon | null {
-    return this.collection.getPokemonAt(this.position);
+    return this.collection.getPokemonAt( this.position );
   }
+
 }
 
 function main() {
-  const pokedex = new PokemonCollection();
+  const pokemonDex = new PokemonCollection();
 
-  pokedex.addPokemon(new Pokemon('Pikachu', 'Eléctrico'));
-  pokedex.addPokemon(new Pokemon('Charmander', 'Fuego'));
-  pokedex.addPokemon(new Pokemon('Squirtle', 'Agua'));
-  pokedex.addPokemon(new Pokemon('Bulbasaur', 'Planta'));
-  pokedex.addPokemon(new Pokemon('Jigglypuff', 'Normal'));
+  pokemonDex.addPokemon( new Pokemon( 'Pikachu', 'Eléctrico' ) );
+  pokemonDex.addPokemon( new Pokemon( 'Charmander', 'Fuego' ) );
+  pokemonDex.addPokemon( new Pokemon( 'Squirtle', 'Agua' ) );
+  pokemonDex.addPokemon( new Pokemon( 'Bulbasaur', 'Planta' ) );
+  pokemonDex.addPokemon( new Pokemon( 'Jigglypuff', 'Normal' ) );
 
-  const iterator = pokedex.createIterator();
 
-  while (iterator.hasNext()) {
+  const iterator = pokemonDex.createIterator();
+
+  while ( iterator.hasNext() ) {
     const pokemon = iterator.next();
-
-    if (pokemon) {
-      console.log(`Pokémon: ${pokemon.name}, Tipo: ${pokemon.type}`);
+    if ( pokemon ) {
+      console.log( `Pokémon: ${ pokemon.name }, Tipo: ${ pokemon.type }` );
     }
   }
-}
 
+}
 main();

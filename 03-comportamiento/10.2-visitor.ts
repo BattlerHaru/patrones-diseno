@@ -25,14 +25,14 @@ import { COLORS } from '../helpers/colors.ts';
 
 // Interfaz Visitor
 interface Visitor {
-  visitCar(car: Car): void;
-  visitMotorcycle(motorcycle: Motorcycle): void;
-  visitTruck(truck: Truck): void;
+  visitCar( car: Car ): void;
+  visitMotorcycle( motorcycle: Motorcycle ): void;
+  visitTruck( truck: Truck ): void;
 }
 
 // Interfaz Vehicle
 interface Vehicle {
-  accept(visitor: Visitor): void;
+  accept( visitor: Visitor ): void;
 }
 
 // Clase concreta - Car
@@ -40,7 +40,7 @@ class Car implements Vehicle {
   private year: number;
   private kilometers: number;
 
-  constructor(year: number, kilometers: number) {
+  constructor( year: number, kilometers: number ) {
     this.year = year;
     this.kilometers = kilometers;
   }
@@ -53,8 +53,8 @@ class Car implements Vehicle {
     return this.kilometers;
   }
 
-  accept(visitor: Visitor): void {
-    visitor.visitCar(this);
+  accept( visitor: Visitor ): void {
+    visitor.visitCar( this );
   }
 }
 
@@ -63,7 +63,7 @@ class Motorcycle implements Vehicle {
   private year: number;
   private kilometers: number;
 
-  constructor(year: number, kilometers: number) {
+  constructor( year: number, kilometers: number ) {
     this.year = year;
     this.kilometers = kilometers;
   }
@@ -76,8 +76,8 @@ class Motorcycle implements Vehicle {
     return this.kilometers;
   }
 
-  accept(visitor: Visitor): void {
-    visitor.visitMotorcycle(this);
+  accept( visitor: Visitor ): void {
+    visitor.visitMotorcycle( this );
   }
 }
 
@@ -87,7 +87,7 @@ class Truck implements Vehicle {
   private kilometers: number;
   private loadCapacity: number;
 
-  constructor(year: number, kilometers: number, loadCapacity: number) {
+  constructor( year: number, kilometers: number, loadCapacity: number ) {
     this.year = year;
     this.kilometers = kilometers;
     this.loadCapacity = loadCapacity;
@@ -105,75 +105,71 @@ class Truck implements Vehicle {
     return this.loadCapacity;
   }
 
-  accept(visitor: Visitor): void {
-    visitor.visitTruck(this);
+  accept( visitor: Visitor ): void {
+    visitor.visitTruck( this );
   }
 }
 
 // Clase visitante - MaintenanceCostVisitor
 class MaintenanceCostVisitor implements Visitor {
-  visitCar(car: Car): void {
-    const cost = car.getKilometers() * 0.1 + (2024 - car.getYear()) * 50;
+  visitCar( car: Car ): void {
+    const cost = car.getKilometers() * 0.1 + ( 2024 - car.getYear() ) * 50;
 
     console.log(
-      `Costo de mantenimiento para el automóvil: $${cost.toFixed(2)}`
+      `Costo de mantenimiento para el automóvil: $${ cost.toFixed( 2 ) }`
     );
   }
 
-  visitMotorcycle(motorcycle: Motorcycle): void {
-    // TODO: Calcular el costo de mantenimiento para la motocicleta
-    const cost =
-      motorcycle.getKilometers() * 0.05 + (2024 - motorcycle.getYear()) * 30;
+  visitMotorcycle( motorcycle: Motorcycle ): void {
+    const cost = motorcycle.getKilometers() * 0.05 + ( 2024 - motorcycle.getYear() ) * 30;
 
     console.log(
-      `Costo de mantenimiento para la motocicleta: $${cost.toFixed(2)}`
+      `Costo de mantenimiento para la motocicleta: $${ cost.toFixed( 2 ) }`
     );
   }
 
-  visitTruck(truck: Truck): void {
-    const cost =
-      truck.getKilometers() * 0.15 +
-      truck.getLoadCapacity() * 20 +
-      (2024 - truck.getYear()) * 100;
+  visitTruck( truck: Truck ): void {
+    const cost = truck.getKilometers() * 0.15 + truck.getLoadCapacity() * 20 + ( 2024 - truck.getYear() ) * 100;
 
-    console.log(`Costo de mantenimiento para el camión: $${cost.toFixed(2)}`);
+    console.log( `Costo de mantenimiento para el camión: $${ cost.toFixed( 2 ) }` );
   }
 }
 
 // Clase visitante - EmissionCheckVisitor
 class EmissionCheckVisitor implements Visitor {
-  visitCar(car: Car): void {
-    const passes = car.getYear() > 2000 && car.getKilometers() < 200_000;
-    console.log(`Automóvil cumple con emisiones: ${passes ? 'Sí' : 'No'}`);
+  visitCar( car: Car ): void {
+    const passes = ( car.getYear() > 2000 && car.getKilometers() < 200_000 ) ? true : false;
+    console.log( `Automóvil cumple con emisiones: ${ ( passes ) ? 'Sí' : 'No' }` );
   }
 
-  visitMotorcycle(motorcycle: Motorcycle): void {
-    const passes =
-      motorcycle.getYear() > 2005 && motorcycle.getKilometers() < 100_000;
-    console.log(`Motocicleta cumple con emisiones: ${passes ? 'Sí' : 'No'}`);
+  visitMotorcycle( motorcycle: Motorcycle ): void {
+    const passes = ( motorcycle.getYear() > 2005 && motorcycle.getKilometers() < 100_000 ) ? true : false;
+
+    console.log( `Motocicleta cumple con emisiones: ${ passes ? 'Sí' : 'No' }` );
   }
 
-  visitTruck(truck: Truck): void {
-    const passes = truck.getYear() > 2010 && truck.getKilometers() < 300_000;
-    console.log(`Camión cumple con emisiones: ${passes ? 'Sí' : 'No'}`);
+  visitTruck( truck: Truck ): void {
+    const passes = ( truck.getYear() > 2010 && truck.getKilometers() < 300_000 ) ? true : false;
+
+    console.log( `Camión cumple con emisiones: ${ passes ? 'Sí' : 'No' }` );
   }
 }
 
 // ! Código Cliente
 function main(): void {
   const vehicles: Vehicle[] = [
-    new Car(2000, 150_000),
-    new Motorcycle(2015, 30_000),
-    new Truck(2012, 250_000, 20),
+    new Car( 2018, 50_000 ),
+    new Motorcycle( 2015, 30_000 ),
+    new Truck( 2012, 250_000, 20 ),
   ];
 
-  console.log('%c\nCalculando costos de mantenimiento:', COLORS.green);
+  console.log( '%c\nCalculando costos de mantenimiento:', COLORS.green );
   const maintenanceVisitor = new MaintenanceCostVisitor();
-  vehicles.forEach((vehicle) => vehicle.accept(maintenanceVisitor));
+  vehicles.forEach( ( vehicle ) => vehicle.accept( maintenanceVisitor ) );
 
-  console.log('%c\nVerificando emisiones:', COLORS.green);
+  console.log( '%c\nVerificando emisiones:', COLORS.green );
   const emissionVisitor = new EmissionCheckVisitor();
-  vehicles.forEach((vehicle) => vehicle.accept(emissionVisitor));
+  vehicles.forEach( ( vehicle ) => vehicle.accept( emissionVisitor ) );
 }
 
 main();

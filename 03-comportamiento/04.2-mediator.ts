@@ -12,19 +12,19 @@
 
 /**
  * 1.	Clase ControlTower:
-	•	Actúa como el Mediador entre los aviones. 
+  •	Actúa como el Mediador entre los aviones. 
     La torre de control coordina las comunicaciones entre los aviones 
     para evitar colisiones y recibir sus solicitudes de despegue 
     o aterrizaje.
 
-	2.	Clase Airplane:
-	•	Representa a un avión que puede enviar y recibir mensajes 
+  2.	Clase Airplane:
+  •	Representa a un avión que puede enviar y recibir mensajes 
     a través de la torre de control. 
     Los aviones no se comunican directamente entre sí, 
     sino a través de la torre de control, que gestiona la información.
 
-	3.	Interacciones:
-	•	Los aviones pueden solicitar permiso para aterrizar o despegar, 
+  3.	Interacciones:
+  •	Los aviones pueden solicitar permiso para aterrizar o despegar, 
     y la torre de control enviará mensajes a los demás aviones 
     notificándoles de la actividad de cada avión.
  */
@@ -35,38 +35,39 @@ import { COLORS } from '../helpers/colors.ts';
 class ControlTower {
   private airplanes: Airplane[] = [];
 
-  // Registrar un avión en la torre de control
-  registerAirplane(airplane: Airplane) {
-    this.airplanes.push(airplane);
+
+  registerAirplane( airplane: Airplane ): void {
+    this.airplanes.push( airplane );
   }
 
-  // Enviar un mensaje de un avión a todos los demás
-  sendMessage(sender: Airplane, message: string): void {
-    this.airplanes
-      .filter((airplane) => airplane !== sender)
-      .forEach((airplane) => airplane.receiveMessage(sender, message));
+  sendMessage( sender: Airplane, message: string ): void {
+    const userToSend = this.airplanes.filter( airplane => airplane !== sender );
+
+    for ( const airplane of userToSend ) {
+      airplane.receiveMessage( sender, message );
+    }
   }
 
   // Coordinación de aterrizaje
-  requestLanding(sender: Airplane): void {
+  requestLanding( sender: Airplane ): void {
     console.log(
-      `\n%cTorre de Control: %cPermiso de aterrizaje concedido a ${sender.getId()}`,
+      `\n%cTorre de Control: %cPermiso de aterrizaje concedido a ${ sender.getId() }`,
       COLORS.green,
       COLORS.white
     );
 
-    this.sendMessage(sender, `${sender.getId()} está aterrizando.`);
+    this.sendMessage( sender, `${ sender.getId() } está aterrizando.` );
   }
 
   // Coordinación de despegue
-  requestTakeoff(sender: Airplane): void {
+  requestTakeoff( sender: Airplane ): void {
     console.log(
-      `\n%cTorre de Control: %cPermiso de despegue concedido a ${sender.getId()}`,
+      `\n%cTorre de Control: %cPermiso de despegue concedido a ${ sender.getId() }`,
       COLORS.green,
       COLORS.white
     );
 
-    this.sendMessage(sender, `${sender.getId()} está despegando.`);
+    this.sendMessage( sender, `${ sender.getId() } está despegando.` );
   }
 }
 
@@ -75,11 +76,11 @@ class Airplane {
   private id: string;
   private controlTower: ControlTower;
 
-  constructor(id: string, controlTower: ControlTower) {
+  constructor( id: string, controlTower: ControlTower ) {
     this.id = id;
     this.controlTower = controlTower;
 
-    controlTower.registerAirplane(this);
+    controlTower.registerAirplane( this );
   }
 
   getId(): string {
@@ -88,21 +89,22 @@ class Airplane {
 
   // Solicitar aterrizaje a la torre de control
   requestLanding(): void {
-    console.log(`${this.id} solicita permiso para aterrizar.`);
-    this.controlTower.requestLanding(this);
+    console.log( `${ this.id } solicita permiso para aterrizar.` );
+
+    this.controlTower.requestLanding( this );
   }
 
   // Solicitar despegue a la torre de control
   requestTakeoff(): void {
-    console.log(`${this.id} solicita permiso para despegar.`);
+    console.log( `${ this.id } solicita permiso para despegar.` );
 
-    this.controlTower.requestTakeoff(this);
+    this.controlTower.requestTakeoff( this );
   }
 
   // Recibir mensaje de otros aviones
-  receiveMessage(sender: Airplane, message: string): void {
+  receiveMessage( sender: Airplane, message: string ): void {
     console.log(
-      `${this.id} recibe mensaje de %c${sender.getId()}: "${message}"`,
+      `${ this.id } recibe mensaje de %c${ sender.getId() }: "${ message }"`,
       COLORS.blue
     );
   }
@@ -113,9 +115,9 @@ class Airplane {
 function main(): void {
   const controlTower = new ControlTower();
 
-  const airplane1 = new Airplane('Vuelo 101', controlTower);
-  const airplane2 = new Airplane('Vuelo 202', controlTower);
-  const airplane3 = new Airplane('Vuelo 303', controlTower);
+  const airplane1 = new Airplane( 'Vuelo 101', controlTower );
+  const airplane2 = new Airplane( 'Vuelo 202', controlTower );
+  const airplane3 = new Airplane( 'Vuelo 303', controlTower );
 
   // Ejemplo de interacciones
   airplane1.requestLanding();

@@ -10,90 +10,78 @@
  * https://refactoring.guru/es/design-patterns/chain-of-responsibility
  */
 
-import { COLORS } from '../helpers/colors.ts';
+import { COLORS } from "../helpers/colors.ts";
 
 interface Handler {
-  setNext(handler: Handler): Handler;
-  handle(request: string): void;
+    setNext( handler: Handler ): Handler;
+    handle( request: string ): void;
 }
 
 abstract class BaseHandler implements Handler {
-  private nextHandler?: Handler;
+    private nextHandler?: Handler;
 
-  setNext(handler: Handler): Handler {
-    this.nextHandler = handler;
-    return handler;
-  }
-
-  handle(request: string): void {
-    if (this.nextHandler) {
-      this.nextHandler.handle(request);
+    setNext( handler: Handler ): Handler {
+        this.nextHandler = handler;
+        return handler;
     }
-  }
+    handle( request: string ): void {
+        if ( this.nextHandler ) {
+            this.nextHandler.handle( request );
+        }
+    }
+
 }
 
-// Soporte básico
 class BasicSupport extends BaseHandler {
-  override handle(request: string): void {
-    if (request === 'básico') {
-      console.log(
-        'Soporte básico: %cResolviendo problema básico',
-        COLORS.green
-      );
-      return;
-    }
 
-    console.log('Soporte básico: Pasando el problema a soporte avanzado');
-    super.handle(request);
-  }
+    override handle( request: string ): void {
+        if ( request === "básico" ) {
+            console.log( "%cSoporte básico: Resolviendo problema básico", COLORS.green );
+            return;
+        }
+
+        console.log( "Soporte básico: Pasando el problema a Soporte avanzado" );
+        super.handle( request );
+    }
 }
 
 class AdvancedSupport extends BaseHandler {
-  override handle(request: string): void {
-    if (request === 'avanzado') {
-      console.log(
-        'Soporte avanzado: %cResolviendo problema avanzado',
-        COLORS.yellow
-      );
-      return;
-    }
 
-    console.log(
-      'Soporte avanzado: %cPasando el problema a soporte experto',
-      COLORS.purple
-    );
-    super.handle(request);
-  }
+    override handle( request: string ): void {
+        if ( request === "avanzado" ) {
+            console.log( "%cSoporte avanzado: Resolviendo problema avanzado", COLORS.yellow );
+            return;
+        }
+
+        console.log( "Soporte avanzado: Pasando el problema a Soporte experto" );
+        super.handle( request );
+    }
 }
 
-class ExpertSupport extends BaseHandler {
-  override handle(request: string): void {
-    if (request === 'experto') {
-      console.log(
-        'Soporte experto: %cResolviendo problema experto',
-        COLORS.yellow
-      );
-      return;
-    }
 
-    console.log(
-      '%cSoporte experto: No hay nada que hacer... bye bye',
-      COLORS.red
-    );
-  }
+class ExpertSupport extends BaseHandler {
+
+    override handle( request: string ): void {
+        if ( request === "experto" ) {
+            console.log( "%cSoporte experto: Resolviendo problema experto", COLORS.red );
+            return;
+        }
+
+        console.log( "%cSoporte experto: No hay nada que hacer... bye bye", COLORS.red );
+        super.handle( request );
+    }
 }
 
 function main() {
-  const basicSupport = new BasicSupport();
-  const advancedSupport = new AdvancedSupport();
-  const expertSupport = new ExpertSupport();
+    const basicSupport = new BasicSupport();
+    const advancedSupport = new AdvancedSupport();
+    const expertSupport = new ExpertSupport();
 
-  basicSupport.setNext(advancedSupport).setNext(expertSupport);
+    basicSupport.setNext( advancedSupport ).setNext( expertSupport );
 
-  basicSupport.handle('básico');
-  basicSupport.handle('avanzado');
-  basicSupport.handle('experto');
-  basicSupport.handle('nuclear');
+    basicSupport.handle( "básico" );
+    basicSupport.handle( "avanzado" );
+    basicSupport.handle( "experto" );
+    basicSupport.handle( "nuclear" );
 }
-
 main();

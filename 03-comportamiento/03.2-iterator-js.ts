@@ -14,7 +14,7 @@ class Pokemon {
   name: string;
   type: string;
 
-  constructor(name: string, type: string) {
+  constructor( name: string, type: string ) {
     this.name = name;
     this.type = type;
   }
@@ -24,45 +24,44 @@ class Pokemon {
 class PokemonCollection {
   private pokemons: Pokemon[] = [];
 
-  addPokemon(pokemon: Pokemon): void {
-    this.pokemons.push(pokemon);
+  addPokemon( pokemon: Pokemon ): void {
+    this.pokemons.push( pokemon );
   }
-
-  //TODO: Implementación del iterador usando una función generadora
+  // El * antes del nombre indica que es una función generadora.
   *getPokemons(): IterableIterator<Pokemon> {
-    for (const pokemon of this.pokemons) {
+    for ( const pokemon of this.pokemons ) {
+      // pausa la ejecución y guarda el estado, permitiendo retomarla más tarde.
       yield pokemon;
     }
   }
 
-  // Implementación del iterador usando un método con Symbol.iterator
+  // Implementación del iterator usando un método con Symbol.iterator
   // para hacer que la colección sea iterable
   // yield* delega la responsabilidad de la iteración a la colección de Pokemons
-  // TODO: *[Symbol.iterator]()
-  *[Symbol.iterator](): IterableIterator<Pokemon> {
+  *[ Symbol.iterator ](): IterableIterator<Pokemon> {
+    // Delegación automática: usa el iterator de this.pokemons sin necesidad de un for.
     yield* this.pokemons;
   }
 }
 
-// Código Cliente para probar el iterador con función generadora
+// Código Cliente para probar el iterator con función generadora
 
 function main(): void {
   const pokedex = new PokemonCollection();
 
   // Agregar Pokemones a la colección
-  pokedex.addPokemon(new Pokemon('Pikachu', 'Eléctrico'));
-  pokedex.addPokemon(new Pokemon('Charmander', 'Fuego'));
-  pokedex.addPokemon(new Pokemon('Squirtle', 'Agua'));
-  pokedex.addPokemon(new Pokemon('Bulbasaur', 'Planta'));
+  pokedex.addPokemon( new Pokemon( 'Pikachu', 'Eléctrico' ) );
+  pokedex.addPokemon( new Pokemon( 'Charmander', 'Fuego' ) );
+  pokedex.addPokemon( new Pokemon( 'Squirtle', 'Agua' ) );
+  pokedex.addPokemon( new Pokemon( 'Bulbasaur', 'Planta' ) );
 
   // Recorremos la colección usando for...of, gracias a la función generadora
-  console.log('Recorriendo la colección de Pokemons:');
-  // for (const pokemon of pokedex.getPokemons()) {
-  //   console.log(`Pokémon: ${pokemon.name}, Tipo: ${pokemon.type}`);
+  console.log( 'Recorriendo la colección de Pokemons:' );
+  // for ( const pokemon of pokedex.getPokemons() ) {
+  //   console.log( `Pokémon: ${ pokemon.name }, Tipo: ${ pokemon.type }` );
   // }
-
-  for (const pokemon of pokedex) {
-    console.log(`Pokémon: ${pokemon.name}, Tipo: ${pokemon.type}`);
+  for ( const pokemon of pokedex ) {
+    console.log( `Pokémon: ${ pokemon.name }, Tipo: ${ pokemon.type }` );
   }
 }
 

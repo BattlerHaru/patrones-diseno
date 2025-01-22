@@ -10,9 +10,10 @@
  * * Es útil cuando se necesita desacoplar el objeto que invoca
  * * la operación del objeto que sabe cómo realizarla.
  *
+ *
  */
 
-import { COLORS } from '../helpers/colors.ts';
+import { COLORS } from "../helpers/colors.ts";
 
 interface Command {
   execute(): void;
@@ -20,28 +21,27 @@ interface Command {
 
 class Light {
   turnOn(): void {
-    console.log('%cLa luz está encendida', COLORS.yellow);
+    console.log( "%cLa luz está encendida", COLORS.yellow );
   }
-
   turnOff(): void {
-    console.log('%cLa luz está apagada', COLORS.yellow);
+    console.log( "%cLa luz está apagada", COLORS.yellow );
   }
 }
 
 class Fan {
   on(): void {
-    console.log('%cEl ventilador está encendido', COLORS.green);
+    console.log( "%cel ventilador está encendido", COLORS.green );
   }
-
   off(): void {
-    console.log('%cEl ventilador está apagado', COLORS.green);
+    console.log( "%cel ventilador está apagado", COLORS.green );
   }
 }
 
-// Comandos
 
 class LightOnCommand implements Command {
-  constructor(private light: Light) {}
+  constructor( private light: Light ) {
+
+  }
 
   execute(): void {
     this.light.turnOn();
@@ -49,7 +49,9 @@ class LightOnCommand implements Command {
 }
 
 class LightOffCommand implements Command {
-  constructor(private light: Light) {}
+  constructor( private light: Light ) {
+
+  }
 
   execute(): void {
     this.light.turnOff();
@@ -57,7 +59,9 @@ class LightOffCommand implements Command {
 }
 
 class FanOnCommand implements Command {
-  constructor(private fan: Fan) {}
+  constructor( private fan: Fan ) {
+
+  }
 
   execute(): void {
     this.fan.on();
@@ -65,7 +69,9 @@ class FanOnCommand implements Command {
 }
 
 class FanOffCommand implements Command {
-  constructor(private fan: Fan) {}
+  constructor( private fan: Fan ) {
+
+  }
 
   execute(): void {
     this.fan.off();
@@ -75,17 +81,17 @@ class FanOffCommand implements Command {
 class RemoteControl {
   private commands: Record<string, Command> = {};
 
-  setCommand(button: string, command: Command) {
-    this.commands[button] = command;
+  setCommand( button: string, command: Command ) {
+    this.commands[ button ] = command;
   }
 
-  pressButton(button: string): void {
-    if (this.commands[button]) {
-      this.commands[button].execute();
+  pressButton( button: string ) {
+    if ( this.commands[ button ] ) {
+      this.commands[ button ].execute();
       return;
     }
 
-    console.log('%cNo se ha asignado un comando a ese botón', COLORS.red);
+    console.log( "%cNo se ha asignado un comando a este botón", COLORS.red );
   }
 }
 
@@ -94,43 +100,42 @@ function main() {
   const light = new Light();
   const fan = new Fan();
 
-  // Crear los comandos para los dispositivos
-  const lightOnCommand = new LightOnCommand(light);
-  const lightOffCommand = new LightOffCommand(light);
+  // Crear los comandos
+  const lightOnCommand = new LightOnCommand( light );
+  const lightOffCommand = new LightOffCommand( light );
 
-  const fanOnCommand = new FanOnCommand(fan);
-  const fanOffCommand = new FanOffCommand(fan);
+  const fanOnCommand = new FanOnCommand( fan );
+  const fanOffCommand = new FanOffCommand( fan );
 
-  // Asignar las acciones al el control remoto
-  remoteControl.setCommand('1', lightOnCommand);
-  remoteControl.setCommand('2', lightOffCommand);
-  remoteControl.setCommand('3', fanOnCommand);
-  remoteControl.setCommand('4', fanOffCommand);
+  // asignar las acciones a los botones
+  remoteControl.setCommand( "1", lightOnCommand );
+  remoteControl.setCommand( "2", lightOffCommand );
+  remoteControl.setCommand( "3", fanOnCommand );
+  remoteControl.setCommand( "4", fanOffCommand );
 
   let continueProgram = true;
 
   do {
     console.clear();
-    const pressedButton =
-      prompt(
-        `Presiona un botón del control:
-        1. Encender luz
-        2. Apagar luz
-        3. Encender ventilador
-        4. Apagar ventilador
+    const pressedButton = prompt(
+      `Presiona un botón del control:
+            1. Encender la luz
+            2. Apagar la luz
+            3. Encender ventilador
+            4. Apagar ventilador
 
-        Botón: 
-      `
-      ) ?? '';
+            Botón:
+            `) ?? '';
 
-    remoteControl.pressButton(pressedButton);
+    remoteControl.pressButton( pressedButton );
 
     const continueProgramResponse = prompt(
-      `\n¿Deseas continuar? (y/n):`
-    )?.toLowerCase();
+      `\n¿Deseas continuar? (y/n):` )?.toLocaleLowerCase();
 
-    continueProgram = continueProgramResponse === 'n' ? false : true;
-  } while (continueProgram);
+    continueProgram = continueProgramResponse === "n" ? false : true;
+  } while ( continueProgram );
+
+
+
 }
-
 main();
