@@ -8,31 +8,34 @@
  *
  */
 
-import { COLORS } from '../helpers/colors.ts';
+import { COLORS } from "../helpers/colors.ts";
 
-type Language = 'es' | 'en' | 'fr';
+// * Ejemplo patron Factory Function 
 
-// i18n
-function createGreeter(lang: Language) {
-  return function (name: string) {
+type Language = "es" | "en" | "fr";
+function createGreeter( lang: Language ) {
+  return function ( name: string ) {
     const messages = {
-      es: `Hola, %c${name}!`,
-      en: `Hello, %c${name}!`,
-      fr: `Bonjour, %c${name}!`,
+      es: `Hola, %c${ name }!`,
+      en: `Hello, %c${ name }!`,
+      fr: `Bonjour, %c${ name }!`
     };
 
-    return console.log(messages[lang], COLORS.red);
+    return console.log( messages[ lang ], COLORS.blue );
   };
 }
 
 function main() {
-  const spanishGreeter = createGreeter('es');
-  const englishGreeter = createGreeter('en');
-  const frenchGreeter = createGreeter('fr');
+  const spanishGreeter = createGreeter( "es" );
+  const englishGreeter = createGreeter( "en" );
+  const frenchGreeter = createGreeter( "fr" );
 
-  spanishGreeter('Fernando');
-  englishGreeter('Alice');
-  frenchGreeter('Pierre');
+
+  spanishGreeter( "Fernando" );
+  englishGreeter( "Alice" );
+  frenchGreeter( "Pierre" );
+
+
 }
 
 main();

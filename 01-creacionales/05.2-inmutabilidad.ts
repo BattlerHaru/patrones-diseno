@@ -29,52 +29,57 @@ class Player {
   readonly score: number;
   readonly level: number;
 
-  constructor({ level, name, score }: PlayerProps) {
+  constructor( { name, score, level }: PlayerProps ) {
     this.name = name;
     this.score = score;
     this.level = level;
   }
 
   // Método copyWith para crear una copia modificada del jugador
-  copyWith({ name, score, level }: Partial<Player>): Player {
-    return new Player({
-      level: level ?? this.level,
+  copyWith( {
+    name,
+    score,
+    level
+  }: Partial<Player> ): Player {
+    return new Player( {
       name: name ?? this.name,
       score: score ?? this.score,
-    });
+      level: level ?? this.level,
+    } );
   }
 
   displayState(): void {
-    console.log(`\n%cJugador: ${this.name}`, COLORS.green);
-    console.log(`%cPuntaje: ${this.score}`, COLORS.yellow);
-    console.log(`%cNivel: ${this.level}`, COLORS.blue);
+    console.log( `\n%cJugador: ${ this.name }`, COLORS.green );
+    console.log( `%cPuntaje: ${ this.score }`, COLORS.yellow );
+    console.log( `%cNivel: ${ this.level }`, COLORS.blue );
   }
 }
 
 // 2. Código Cliente para probar
 function main() {
   // Crear jugador inicial
-  let player = new Player({
-    level: 1,
+  let player = new Player( {
     name: 'Carlos',
     score: 0,
-  });
-  console.log('Estado inicial:');
+    level: 1
+    ,
+  } );
+  console.log( 'Estado inicial:' );
   player.displayState();
 
   // Incrementar el puntaje
-  player = player.copyWith({ score: 10 });
-  console.log('\nDespués de incrementar el puntaje:');
+  player = player.copyWith( { score: 10 } );
+  console.log( '\nDespués de incrementar el puntaje:' );
   player.displayState();
 
   // Subir de nivel
-  player = player.copyWith({ level: 2 });
-  console.log('\nDespués de subir de nivel:');
+  player = player.copyWith( { level: 2 } );
+  console.log( '\nDespués de subir de nivel:' );
   player.displayState();
 
   // Cambiar el nombre del jugador
-  player = player.copyWith({ name: 'Carlos Pro' });
-  console.log('\nDespués de cambiar el nombre:');
+  player = player.copyWith( { name: 'Carlos Pro' } );
+  console.log( '\nDespués de cambiar el nombre:' );
   player.displayState();
 }
 

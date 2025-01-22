@@ -12,24 +12,29 @@
  * https://refactoring.guru/es/design-patterns/abstract-factory
  */
 
-import { COLORS } from '../helpers/colors.ts';
 
 /**
  * !Instrucciones:
- 	1.Completen las Clases de Productos:
+    1.Completen las Clases de Productos:
     •	ElectricCar debe implementar Vehicle y mostrar el mensaje "Ensamblando un auto eléctrico".
     •	GasCar debe implementar Vehicle y mostrar el mensaje "Ensamblando un auto de combustión".
     •	ElectricEngine debe implementar Engine y mostrar el mensaje "Arrancando motor eléctrico".
     •	GasEngine debe implementar Engine y mostrar el mensaje "Arrancando motor de combustión".
 
-	2.	Completen las Clases de Fábricas:
+  2.	Completen las Clases de Fábricas:
     •	ElectricVehicleFactory debe crear un ElectricCar y un ElectricEngine.
     •	GasVehicleFactory debe crear un GasCar y un GasEngine.
 
-	3. Prueben el Código:
-	  •	Ejecuten el código para asegurarse de que cada fábrica produce el tipo correcto de vehículo y motor.
+  3. Prueben el Código:
+    •	Ejecuten el código para asegurarse de que cada fábrica produce el tipo correcto de vehículo y motor.
 
  */
+
+//! Solución  
+
+import { COLORS } from "../helpers/colors.ts";
+
+
 // 1. Interfaces de Vehicle y Engine
 interface Vehicle {
   assemble(): void;
@@ -43,25 +48,25 @@ interface Engine {
 
 class ElectricCar implements Vehicle {
   assemble(): void {
-    console.log('Ensamblando un auto %celéctrico', COLORS.blue);
+    console.log( '%cEnsamblando un auto eléctrico', COLORS.blue );
   }
 }
 
 class GasCar implements Vehicle {
   assemble(): void {
-    console.log('Ensamblando un auto de %ccombustión', COLORS.brown);
+    console.log( '%cEnsamblando un auto de combustión', COLORS.green );
   }
 }
 
 class ElectricEngine implements Engine {
   start(): void {
-    console.log('Arrancando motor %celéctrico', COLORS.blue);
+    console.log( '%cArrancando motor eléctrico', COLORS.blue );
   }
 }
 
 class GasEngine implements Engine {
   start(): void {
-    console.log('Arrancando motor de %ccombustión', COLORS.brown);
+    console.log( '%cArrancando motor de combustión', COLORS.green );
   }
 }
 
@@ -87,15 +92,16 @@ class GasVehicleFactory implements VehicleFactory {
   createVehicle(): Vehicle {
     return new GasCar();
   }
+
   createEngine(): Engine {
     return new GasEngine();
   }
-  // Implementación de los métodos createVehicle y createEngine
+
 }
 
 // 5. Código Cliente
 
-function main(factory: VehicleFactory) {
+function main( factory: VehicleFactory ) {
   const vehicle = factory.createVehicle();
   const engine = factory.createEngine();
 
@@ -104,8 +110,8 @@ function main(factory: VehicleFactory) {
 }
 
 // Pruebas
-console.log('Creando vehículo eléctrico:');
-main(new ElectricVehicleFactory());
+console.log( 'Creando vehículo eléctrico:' );
+main( new ElectricVehicleFactory() );
 
-console.log('\nCreando vehículo de combustión:');
-main(new GasVehicleFactory());
+console.log( '\nCreando vehículo de combustión:' );
+main( new GasVehicleFactory() );

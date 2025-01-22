@@ -16,13 +16,15 @@
  * 	!Descripción:
   1.	Completen las clases SalesReport e InventoryReport para implementar 
       la interfaz Report, generando el contenido de cada reporte en el método generate.
-	  
+    
   2.	Implementen las clases SalesReportFactory e InventoryReportFactory 
       para crear instancias de SalesReport y InventoryReport, respectivamente.
 
-	3.	Prueben el programa generando diferentes tipos de reportes usando
+  3.	Prueben el programa generando diferentes tipos de reportes usando
       el prompt para seleccionar el tipo de reporte.
  */
+
+//! Solución  
 
 import { COLORS } from '../helpers/colors.ts';
 
@@ -36,13 +38,13 @@ interface Report {
 
 class SalesReport implements Report {
   generate(): void {
-    console.log('%cGenerando reporte de ventas...', COLORS.green);
+    console.log( "%cGenerando el reporte de ventas", COLORS.green );
   }
 }
 
 class InventoryReport implements Report {
   generate(): void {
-    console.log('%cGenerando reporte de inventario...', COLORS.orange);
+    console.log( "%cGenerando el reporte de inventario", COLORS.orange );
   }
 }
 
@@ -61,13 +63,13 @@ abstract class ReportFactory {
 
 class SalesReportFactory extends ReportFactory {
   createReport(): Report {
-    return new SalesReport();
+    return new SalesReport;
   }
 }
 
 class InventoryReportFactory extends ReportFactory {
   createReport(): Report {
-    return new InventoryReport();
+    return new InventoryReport;
   }
 }
 
@@ -76,9 +78,11 @@ class InventoryReportFactory extends ReportFactory {
 function main() {
   let reportFactory: ReportFactory;
 
-  const reportType = prompt('¿Qué tipo de reporte deseas? (sales/inventory)');
+  const reportType = prompt(
+    '¿Qué tipo de reporte deseas? %c(sales/inventory)'
+  );
 
-  if (reportType === 'sales') {
+  if ( reportType === 'sales' ) {
     reportFactory = new SalesReportFactory();
   } else {
     reportFactory = new InventoryReportFactory();

@@ -10,35 +10,31 @@
  * https://refactoring.guru/es/design-patterns/prototype
  */
 
-import { COLORS } from '../helpers/colors.ts';
+import { COLORS } from "../helpers/colors.ts";
 
 class Pokemon {
-  // name: string;
-  // type: string;
-  // level: number;
-  // attacks: string[];
+  name: string;
+  type: string;
+  level: number;
+  attacks: string[];
 
-  constructor(
-    public name: string,
-    public type: string,
-    public level: number,
-    public attacks: string[]
-  ) {
-    // throw new Error('Method not implemented.');
+  constructor( name: string, type: string, level: number, attacks: string[] ) {
+    // throw new Error( 'Method not implemented.' );
+    this.name = name;
+    this.type = type;
+    this.level = level;
+    this.attacks = attacks;
   }
 
   // Método para clonar el Pokémon
   clone(): Pokemon {
     // Los ataques deben de evitar pasarse por referencia, es decir, no deben de ser el mismo arreglo.
-    // Completar: Debe devolver un nuevo Pokémon con los mismos atributos
-    return new Pokemon(this.name, this.type, this.level, [...this.attacks]);
+    return new Pokemon( this.name, this.type, this.level, [ ...this.attacks ] );
   }
 
   displayInfo(): void {
     console.log(
-      `Nombre: ${this.name}\nTipo: ${this.type}\nNivel: ${
-        this.level
-      }\nAtaques: ${this.attacks.join(', ')} \n`
+      `Nombre: ${ this.name }\nTipo: ${ this.type }\nNivel: ${ this.level }\nAtaques: ${ this.attacks.join( ', ' ) }\n`
     );
   }
 }
@@ -50,20 +46,29 @@ class Pokemon {
 
 // Ejemplo:
 function main() {
-  const basePokemon = new Pokemon('Charmander', 'Fuego', 1, [
+  const basePokemon = new Pokemon( 'Charmander', 'Fuego', 1, [
     'Llamarada',
     'Arañazo',
-  ]);
+  ] );
   const clone1 = basePokemon.clone();
   clone1.name = 'Charmeleon';
   clone1.level = 16;
-  clone1.attacks.push('Lanzallamas');
+  clone1.attacks.push( 'Lanzallamas' );
 
-  console.log('%cCharmander', COLORS.red);
-  basePokemon.displayInfo(); // Aquí no debe de aparecer "Lanzallamas"
+  // basePokemon.displayInfo(); // Aquí no debe de aparecer "Lanzallamas"
+  // clone1.displayInfo();
 
-  console.log('%cCharmeleon', COLORS.pink);
-  clone1.displayInfo();
+  function main() {
+    const basePokemon = new Pokemon( "Charmander", "Fuego", 1, [ "Llamarada", "Arañazo" ] );
+    console.log( `%c${ basePokemon.name }`, COLORS.orange );
+    basePokemon.displayInfo();
+
+    const clonePokemon = basePokemon.clone();
+    clonePokemon.level = 14;
+    clonePokemon.attacks.push( "Lanzallamas" );
+    // console.log( { basePokemon } );
+    console.log( `%c${ clonePokemon.name }`, COLORS.orange );
+    clonePokemon.displayInfo();
+  }
 }
-
 main();
